@@ -2,26 +2,29 @@ var model = require('../model');
 
 module.exports = {
 	getOne: function (request, reply) {
-		reply(model.Task.findAll({
+		reply(model.Effort.findAll({
 			attributes: ['id', 'name'],
-			where: {id: request.params.id},
-			include: [
-				{
-					model: model.Task,
-					attributes: ['id', 'name'],
-					through: {attributes: []}
-				},
-				{
-					model: model.Person,
-					attributes: ['id', 'name'],
-					through: {attributes: []}
-				}
-			]
+			where: {id: request.params.effort},
+			//include: [
+			//	{
+			//		model: model.Person,
+			//		attributes: ['id', 'name'],
+			//		through: {attributes: []}
+			//	}
+			//]
 		}));
 	},
 	create: function (request, reply) {
-		reply(model.Task.create({
+		model.Effort.create({
 			name: request.payload.name
-		}));
+		}).then(function(effort){
+			model.Task.findAll({
+				attributes: ['id'],
+				where: {id: request.params.task},
+			}).then(function(task){
+				effort.addTask(task[0]);
+				reply(effort);
+			});
+		});
 	}
 };

@@ -16,6 +16,10 @@ server.route({method: 'POST', 	path:'/program', 		handler: routes.program.create
 server.route({method: 'GET',	path:'/task/{program}', handler: routes.program.getOne });
 server.route({method: 'POST', 	path:'/task/{program}', handler: routes.task.create });
 
+server.route({method: 'GET',	path:'/effort/{task}',  handler: routes.task.getOne });
+server.route({method: 'POST', 	path:'/effort/{task}', 	handler: routes.effort.create });
+
+server.route({method: 'GET',	path:'/details/{effort}',  handler: routes.effort.getOne });
 //groups
 //server.route({method: 'GET',	path:'/group/{id}', handler: routes.group.getOne });
 //server.route({method: 'POST', 	path:'/group', 		handler: routes.group.create });
@@ -25,8 +29,7 @@ server.route({method: 'POST', 	path:'/task/{program}', handler: routes.task.crea
 //server.route({method: 'POST', 	path:'/task', 		handler: routes.task.create });
 //
 ////effort
-//server.route({method: 'GET',	path:'/effort/{id}',  	handler: routes.effort.getOne });
-//server.route({method: 'POST', 	path:'/effort', 		handler: routes.effort.create });
+
 
 
 //server.route({

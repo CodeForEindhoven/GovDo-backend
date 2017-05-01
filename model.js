@@ -12,33 +12,41 @@ var Task = sequelize.define('Task', {
 	name: Sequelize.STRING,
 });
 
+var Effort = sequelize.define('Effort', {
+	name: Sequelize.STRING,
+});
+
 Program.belongsToMany(Task, {through: 'ProgramTask'});
 Task.belongsToMany(Program, {through: 'ProgramTask'});
+
+Task.belongsToMany(Effort, {through: 'TaskEffort'});
+Effort.belongsToMany(Task, {through: 'TaskEffort'});
+
+var Person = sequelize.define('Person', {
+	name: Sequelize.STRING,
+});
+
+Person.belongsToMany(Effort, {through: 'PeopleEffort'});
+Effort.belongsToMany(Person, {through: 'PeopleEffort'});
 
 /*
 var Group = sequelize.define('Group', {
 	name: Sequelize.STRING,
 });
 
-var Person = sequelize.define('Person', {
-	name: Sequelize.STRING,
-});
+
 
 var Misson = sequelize.define('Misson', {
 	name: Sequelize.STRING,
 });
 
 
-var Effort = sequelize.define('Effort', {
-	name: Sequelize.STRING,
-});
 
 
-Task.belongsToMany(Effort, {through: 'TaskEffort'});
-Effort.belongsToMany(Task, {through: 'TaskEffort'});
 
-Person.belongsToMany(Effort, {through: 'PeopleEffort'});
-Effort.belongsToMany(Person, {through: 'PeopleEffort'});
+
+
+
 
 Group.belongsToMany(Person, {through: 'GroupPerson'});
 Person.belongsToMany(Group, {through: 'GroupPerson'});
@@ -61,11 +69,12 @@ function run(callback){
 module.exports = {
 	Program: Program,
 	Task: Task,
+	Effort: Effort,
 	//Person: Person,
 	//Group: Group,
 	//Misson: Misson,
 
-	//Effort: Effort,
+
 	run: run
 };
 
