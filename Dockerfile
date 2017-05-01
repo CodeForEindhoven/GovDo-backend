@@ -8,11 +8,9 @@ WORKDIR /app
 COPY ./src /app
 RUN npm install .
 
-VOLUME /app/database
-
 #Image configuration
 ADD start.sh /start.sh
 RUN chmod 755 /*.sh
 
-EXPOSE 8090
+EXPOSE 8080
 CMD ["/start.sh"]
