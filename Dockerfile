@@ -10,7 +10,7 @@ ENV DB_STORAGE database.sqlite
 
 # Install
 COPY ./src /app
-COPY config-docker.js /app/src/config.js
+COPY config-docker.js /app/config.js
 RUN npm install .
 
 #Image configuration
