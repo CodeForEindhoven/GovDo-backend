@@ -14,6 +14,10 @@ var Task = sequelize.define('Task', {
 
 var Effort = sequelize.define('Effort', {
 	name: Sequelize.STRING,
+	type: {
+		type: Sequelize.INTEGER,
+		defaultValue: -1
+	}
 });
 
 Program.belongsToMany(Task, {through: 'ProgramTask'});
