@@ -1,7 +1,7 @@
 var Sequelize = require('sequelize');
 var sequelize = new Sequelize({
   dialect: 'sqlite',
-  storage: 'database/database.sqlite'
+  storage: 'database.sqlite'
 });
 
 var Program = sequelize.define('Program', {
