@@ -8,7 +8,7 @@ fs.readFile('data.json', {encoding: "utf8"}, function(err, data){
 });
 
 function save(){
-	fs.writeFile('data.json', JSON.stringify(model), function(err){
+	fs.writeFile('data.json', JSON.stringify(model, null, 2), function(err){
 		if(err){console.log(err);}
 	});
 }
@@ -25,8 +25,15 @@ function addTask(title){
 function addEffort(task, title){
 	model.tasks[task].efforts.push({
 		title: title,
-		people: []
+		people: [],
+		type: ""
 	});
+	save();
+	return model;
+}
+
+function addEffortPerson(task, effort, person){
+	model.tasks[task].efforts[effort].people.push(person);
 	save();
 	return model;
 }
@@ -38,5 +45,6 @@ function get(){
 module.exports = {
 	addTask: addTask,
 	addEffort: addEffort,
+	addEffortPerson: addEffortPerson,
 	get: get
 };

@@ -1,70 +1,86 @@
-var efforts = {
-	"1": {
-		tasks: ["1"],
-		people: ["1","2"],
-		title: "this is an effort",
+var Sequelize = require('sequelize');
+var sequelize = new Sequelize({
+  dialect: 'sqlite',
+  storage: 'database.sqlite'
+});
 
-	}
-};
+var Program = sequelize.define('Program', {
+	name: Sequelize.STRING,
+});
 
-var tasks = {
-	"1": {
-		title: "this is a task"
-	}
-};
+var Task = sequelize.define('Task', {
+	name: Sequelize.STRING,
+});
 
-var people = {
-	"1": {
-		name: "heinz"
-	},
-	"2": {
-		name: "kees"
-	}
-};
+Program.belongsToMany(Task, {through: 'ProgramTask'});
+Task.belongsToMany(Program, {through: 'ProgramTask'});
 
-function get_efforts(){
+/*
+var Group = sequelize.define('Group', {
+	name: Sequelize.STRING,
+});
 
-	var transformed_efforts = []
+var Person = sequelize.define('Person', {
+	name: Sequelize.STRING,
+});
 
-	var task_selection = {};
-	for(var i in efforts){
-		for(var j in efforts[i].tasks){
-			if(!task_selection[efforts[i].tasks[j]]){
-				task_selection[efforts[i].tasks[j]] = tasks[efforts[i].tasks[j]];
-				task_selection[efforts[i].tasks[j]].efforts = [];
-			}
-			task_selection[efforts[i].tasks[j]].efforts.push();
+var Misson = sequelize.define('Misson', {
+	name: Sequelize.STRING,
+});
 
-			console.log(task_selection);
-		}
-	}
+
+var Effort = sequelize.define('Effort', {
+	name: Sequelize.STRING,
+});
+
+
+Task.belongsToMany(Effort, {through: 'TaskEffort'});
+Effort.belongsToMany(Task, {through: 'TaskEffort'});
+
+Person.belongsToMany(Effort, {through: 'PeopleEffort'});
+Effort.belongsToMany(Person, {through: 'PeopleEffort'});
+
+Group.belongsToMany(Person, {through: 'GroupPerson'});
+Person.belongsToMany(Group, {through: 'GroupPerson'});
+
+Misson.belongsToMany(Task, {through: 'MissonTask'});
+Task.belongsToMany(Misson, {through: 'MissonTask'});
+*/
+
+function run(callback){
+	sequelize.sync().then(function(){
+		//sequelize.Promise.all([
+		//	Task.create({name:"task1"}),
+		//	Group.create({name: "group3"})
+		//]).spread(function (task, group) {
+		//	return group.addTask(task).return(task);
+		//});
+	}).then(callback);
 }
-
-get_efforts();
-
-/*var store = {};
-
-var uid_counter = 0;
-function uid(){
-	return uid_counter++;
-}
-
-function save(type, value){
-	if(!store[type]){
-		store[type]={};
-	}
-	var id = uid();
-	store[type][id] = value;
-	return id;
-}
-
-function get(type, id){
-	return store[type][id];
-}
-
 
 module.exports = {
-	save: save,
-	get: get
+	Program: Program,
+	Task: Task,
+	//Person: Person,
+	//Group: Group,
+	//Misson: Misson,
+
+	//Effort: Effort,
+	run: run
 };
-*/
+
+
+//sequelize.sync().then(function() {
+//	  sequelize.Promise.all([
+//	    Task.create({name:"task1"}),
+//	    Effort.create({name: "effort1"})
+//	  ]).spread(function (task, effort) {
+//	    return task.addEffort(effort).return(task);
+//	  }).then(function(task) {
+//	    // Get the association
+//	    return task.getEfforts();
+//	  }).then(function(efforts) {
+//	    console.log(efforts);
+//	  });
+//  });
+//
