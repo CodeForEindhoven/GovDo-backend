@@ -4,8 +4,13 @@ FROM node:6
 RUN mkdir -p /app
 WORKDIR /app
 
+# Variables
+ENV PORT 8080
+ENV DB_STORAGE database.sqlite
+
 # Install
 COPY ./src /app
+COPY config-docker.js /app/src/config.js
 RUN npm install .
 
 #Image configuration

@@ -1,7 +1,9 @@
+var config = require("./config");
+
 var Sequelize = require('sequelize');
 var sequelize = new Sequelize({
   dialect: 'sqlite',
-  storage: 'database.sqlite'
+  storage: config.storage
 });
 
 var Program = sequelize.define('Program', {

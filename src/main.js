@@ -1,10 +1,12 @@
+var config = require("./config");
+
 var hapi = require('hapi');
 var model = require('./model');
 var routes = require('./routes');
 
 var server = new hapi.Server();
 server.connection({
-	port: 8080,
+	port: config.port,
 	routes: { cors: true }
 });
 
