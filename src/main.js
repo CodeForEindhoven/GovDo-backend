@@ -11,17 +11,23 @@ server.connection({
 });
 
 // domains
-server.route({method: 'GET',	path:'/domain', 		handler: routes.program.getAll });
-server.route({method: 'POST', 	path:'/program', 		handler: routes.program.create });
+server.route({method: 'GET',	path:'/domain', 					handler: routes.program.getAll });
+server.route({method: 'POST', 	path:'/program', 					handler: routes.program.create });
 
-server.route({method: 'GET',	path:'/task/{program}', handler: routes.program.getOne });
-server.route({method: 'POST', 	path:'/task/{program}', handler: routes.task.create });
+server.route({method: 'GET',	path:'/task/{program}', 			handler: routes.program.getOne });
+server.route({method: 'POST', 	path:'/task/{program}', 			handler: routes.task.create });
 
-server.route({method: 'GET',	path:'/effort/{task}',  handler: routes.task.getOne });
-server.route({method: 'POST', 	path:'/effort/{task}', 	handler: routes.effort.create });
+server.route({method: 'GET',	path:'/effort/{task}',  			handler: routes.task.getOne });
+server.route({method: 'POST', 	path:'/effort/{task}', 				handler: routes.effort.create });
 
-server.route({method: 'GET',	path:'/details/{effort}',  handler: routes.effort.getOne });
-server.route({method: 'POST',	path:'/details/{effort}/type',  handler: routes.effort.setType });
+server.route({method: 'GET',	path:'/details/{effort}',  			handler: routes.effort.getOne });
+server.route({method: 'POST',	path:'/details/{effort}/type',  	handler: routes.effort.setType });
+server.route({method: 'POST',	path:'/details/{effort}/person',  	handler: routes.effort.addPerson });
+server.route({method: 'POST',	path:'/details/{effort}/removeperson',  handler: routes.effort.removePerson });
+
+server.route({method: 'GET',	path:'/people',  	handler: routes.person.getAll });
+server.route({method: 'POST',	path:'/person',  	handler: routes.person.create });
+
 //groups
 //server.route({method: 'GET',	path:'/group/{id}', handler: routes.group.getOne });
 //server.route({method: 'POST', 	path:'/group', 		handler: routes.group.create });
