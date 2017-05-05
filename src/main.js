@@ -12,13 +12,21 @@ server.connection({
 
 // domains
 server.route({method: 'GET',	path:'/domain', 					handler: routes.program.getAll });
+
 server.route({method: 'POST', 	path:'/program', 					handler: routes.program.create });
+server.route({method: 'GET',	path:'/program/{program}', 			handler: routes.program.getOne });
+server.route({method: 'POST', 	path:'/program/{program}', 			handler: routes.program.update });
+server.route({method: 'DELETE', path:'/program/{program}', 			handler: routes.program.delete });
 
-server.route({method: 'GET',	path:'/task/{program}', 			handler: routes.program.getOne });
-server.route({method: 'POST', 	path:'/task/{program}', 			handler: routes.task.create });
+server.route({method: 'POST', 	path:'/task', 						handler: routes.task.create });
+server.route({method: 'GET',	path:'/task/{task}',  				handler: routes.task.getOne });
+server.route({method: 'POST', 	path:'/task/{task}', 				handler: routes.task.update });
+server.route({method: 'DELETE', path:'/task/{task}', 				handler: routes.task.delete });
 
-server.route({method: 'GET',	path:'/effort/{task}',  			handler: routes.task.getOne });
-server.route({method: 'POST', 	path:'/effort/{task}', 				handler: routes.effort.create });
+server.route({method: 'POST', 	path:'/effort', 					handler: routes.effort.create });
+server.route({method: 'GET', 	path:'/effort/{task}', 				handler: routes.effort.getOne });
+server.route({method: 'POST', 	path:'/effort/{task}', 				handler: routes.effort.update });
+server.route({method: 'DELETE', path:'/effort/{program}', 			handler: routes.effort.delete });
 
 server.route({method: 'GET',	path:'/details/{effort}',  			handler: routes.effort.getOne });
 server.route({method: 'POST',	path:'/details/{effort}/type',  	handler: routes.effort.setType });

@@ -20,13 +20,34 @@ module.exports = {
 		}).then(function(effort){
 			model.Task.findAll({
 				attributes: ['id'],
-				where: {id: request.params.task},
+				where: {id: request.payload.task},
 			}).then(function(task){
 				effort.addTask(task[0]);
 				reply(effort);
 			});
 		});
 	},
+
+	update: function(request, reply) {
+		model.Effort.find({
+			attributes: ['id', 'name'],
+			where: {id: request.params.effort}
+		}).then(function(effort){
+			effort.updateAttributes({
+				name: request.payload.name
+			});
+			reply(effort);
+		});
+	},
+
+	delete: function(request, reply) {
+		model.Effort.destroy({
+			where: {id: request.params.effort}
+		}).then(function(data){
+			reply(data);
+		});
+	},
+
 	setType: function (request, reply) {
 		model.Effort.update(
   			{ type: request.payload.type },

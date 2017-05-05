@@ -2,7 +2,7 @@ var model = require('../model');
 
 module.exports = {
 	getOne: function (request, reply) {
-		reply(model.Task.findAll({
+		reply(model.Task.find({
 			attributes: ['id', 'name'],
 			where: {id: request.params.task},
 			include: [
@@ -14,17 +14,39 @@ module.exports = {
 			]
 		}));
 	},
+
 	create: function (request, reply) {
 		model.Task.create({
 			name: request.payload.name
 		}).then(function(task){
 			model.Program.findAll({
 				attributes: ['id'],
-				where: {id: request.params.program},
+				where: {id: request.payload.program},
 			}).then(function(program){
 				task.addProgram(program[0]);
 				reply(task);
 			});
 		});
-	}
+	},
+
+	update: function(request, reply) {
+		model.Task.find({
+			attributes: ['id', 'name'],
+			where: {id: request.params.task}
+		}).then(function(task){
+			task.updateAttributes({
+				name: request.payload.name
+			});
+			reply(task);
+		});
+	},
+
+	delete: function(request, reply) {
+		model.Task.destroy({
+			where: {id: request.params.task}
+		}).then(function(data){
+			reply(data);
+		});
+	},
+
 };
