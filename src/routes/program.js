@@ -3,23 +3,26 @@ var model = require('../model');
 module.exports = {
 	getAll: function (request, reply) {
 		reply(model.Program.findAll({
-			attributes: ['id', 'name']
+			attributes: ['id', 'name', 'mission']
 		}));
 	},
 
 	create: function (request, reply) {
+		console.log(request.payload);
 		reply(model.Program.create({
-			name: request.payload.name
+			name: request.payload.name,
+			mission: request.payload.mission
 		}));
 	},
 
 	update: function(request, reply) {
 		model.Program.find({
-			attributes: ['id', 'name'],
+			attributes: ['id', 'name', 'mission'],
 			where: {id: request.params.program}
 		}).then(function(program){
 			program.updateAttributes({
-				name: request.payload.name
+				name: request.payload.name,
+				mission: request.payload.mission
 			});
 			reply(program);
 		});
@@ -35,7 +38,7 @@ module.exports = {
 
 	getOne: function (request, reply) {
 		reply(model.Program.find({
-			attributes: ['id', 'name'],
+			attributes: ['id', 'name', 'mission'],
 			where: {id: request.params.program},
 			include: [
 				{

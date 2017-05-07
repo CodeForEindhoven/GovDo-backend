@@ -8,8 +8,15 @@ module.exports = {
 			include: [
 				{
 					model: model.Effort,
-					attributes: ['id', 'name'],
-					through: {attributes: []}
+					attributes: ['id', 'name', 'type'],
+					through: {attributes: []},
+					include: [
+						{
+							model: model.Person,
+							attributes: ['id', 'name'],
+							through: {attributes: []}
+						}
+					]
 				}
 			]
 		}));

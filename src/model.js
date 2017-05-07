@@ -8,6 +8,7 @@ var sequelize = new Sequelize({
 
 var Program = sequelize.define('Program', {
 	name: Sequelize.STRING,
+	mission: Sequelize.STRING
 });
 
 var Task = sequelize.define('Task', {
