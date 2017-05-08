@@ -24,9 +24,9 @@ server.route({method: 'POST', 	path:'/task/{task}', 				handler: routes.task.upd
 server.route({method: 'DELETE', path:'/task/{task}', 				handler: routes.task.delete });
 
 server.route({method: 'POST', 	path:'/effort', 					handler: routes.effort.create });
-server.route({method: 'GET', 	path:'/effort/{task}', 				handler: routes.effort.getOne });
-server.route({method: 'POST', 	path:'/effort/{task}', 				handler: routes.effort.update });
-server.route({method: 'DELETE', path:'/effort/{program}', 			handler: routes.effort.delete });
+server.route({method: 'GET', 	path:'/effort/{effort}', 			handler: routes.effort.getOne });
+server.route({method: 'POST', 	path:'/effort/{effort}', 			handler: routes.effort.update });
+server.route({method: 'DELETE', path:'/effort/{effort}', 			handler: routes.effort.delete });
 
 server.route({method: 'GET',	path:'/details/{effort}',  			handler: routes.effort.getOne });
 server.route({method: 'POST',	path:'/details/{effort}/type',  	handler: routes.effort.setType });
