@@ -16,7 +16,8 @@ module.exports = {
 	},
 	create: function (request, reply) {
 		model.Effort.create({
-			name: request.payload.name
+			name: request.payload.name,
+			type: request.payload.type
 		}).then(function(effort){
 			model.Task.findAll({
 				attributes: ['id'],
@@ -34,7 +35,8 @@ module.exports = {
 			where: {id: request.params.effort}
 		}).then(function(effort){
 			effort.updateAttributes({
-				name: request.payload.name
+				name: request.payload.name,
+				type: request.payload.type
 			});
 			reply(effort);
 		});
@@ -58,26 +60,28 @@ module.exports = {
 		});
 	},
 	addPerson: function (request, reply) {
-		model.Effort.findAll({
+
+		model.Effort.find({
 			where: {id: request.params.effort},
 		}).then(function(effort){
+			console.log(request.payload.person);
 			model.Person.findOrCreate({
 				where: {name: request.payload.person},
 			}).then(function(person){
-				effort[0].addPerson(person[0]);
-				reply(effort[0]);
+				effort.addPerson(person[0]);
+				reply(effort);
 			});
 		});
 	},
 	removePerson: function (request, reply) {
-		model.Effort.findAll({
+		model.Effort.find({
 			where: {id: request.params.effort},
 		}).then(function(effort){
 			model.Person.findAll({
 				where: {name: request.payload.person},
 			}).then(function(person){
-				effort[0].removePerson(person[0]);
-				reply(person[0]);
+				effort.removePerson(person[0]);
+				reply(person);
 			});
 		});
 	}
