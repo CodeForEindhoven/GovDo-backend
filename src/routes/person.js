@@ -1,4 +1,4 @@
-var model = require('../model');
+var model = require('../sequelize/models');
 
 module.exports = {
 	getAll: function (request, reply) {
