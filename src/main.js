@@ -11,11 +11,14 @@ server.connection({
 });
 
 // domains
-server.route({method: 'GET',	path:'/domain', 					handler: routes.program.getAll });
+server.route({method: 'GET',	path:'/domain', 					handler: routes.programtype.getAll });
+server.route({method: 'POST',	path:'/domain', 					handler: routes.programtype.create });
+server.route({method: 'POST', 	path:'/domain/{domain}/program', 	handler: routes.programtype.addProgram });
 
 server.route({method: 'POST', 	path:'/program', 					handler: routes.program.create });
 server.route({method: 'GET',	path:'/program/{program}', 			handler: routes.program.getOne });
 server.route({method: 'POST', 	path:'/program/{program}', 			handler: routes.program.update });
+
 server.route({method: 'DELETE', path:'/program/{program}', 			handler: routes.program.delete });
 
 server.route({method: 'POST', 	path:'/task', 						handler: routes.task.create });
