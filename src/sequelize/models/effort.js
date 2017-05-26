@@ -11,6 +11,7 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models) {
         // associations can be defined here
 		Effort.belongsToMany(models.Task, {through: 'TaskEffort'});
+		Effort.belongsToMany(models.Person, {through: 'PeopleEffort'});
       }
     }
   });

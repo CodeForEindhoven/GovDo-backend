@@ -5,6 +5,7 @@
   "main": "main.js",
   "dependencies": {
     "hapi": "^16.1.1",
+    "joi": "^10.5.0",
     "sequelize": "^3.30.4",
     "sequelize-cli": "^2.7.0",
     "sqlite3": "^3.1.8"

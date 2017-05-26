@@ -1,6 +1,7 @@
 var config = require("./config");
 
 var hapi = require('hapi');
+var joi = require('joi');
 var model = require('./sequelize/models');
 var routes = require('./routes');
 
@@ -15,58 +16,147 @@ server.connection({
 //server.route({method: 'POST',	path:'/domain', 					handler: routes.programtype.create });
 //server.route({method: 'POST', 	path:'/domain/{domain}/program', 	handler: routes.programtype.addProgram });
 
-server.route({method: 'POST', 	path:'/program', 					handler: routes.program.create });
-server.route({method: 'GET',	path:'/program/{program}', 			handler: routes.program.getOne });
-server.route({method: 'POST', 	path:'/program/{program}', 			handler: routes.program.update });
 
-server.route({method: 'DELETE', path:'/program/{program}', 			handler: routes.program.delete });
+server.route({
+	method: 'GET', path:'/domain',
+	handler: routes.program.getAll
+});
 
-server.route({method: 'POST', 	path:'/task', 						handler: routes.task.create });
-server.route({method: 'GET',	path:'/task/{task}',  				handler: routes.task.getOne });
-server.route({method: 'POST', 	path:'/task/{task}', 				handler: routes.task.update });
-server.route({method: 'DELETE', path:'/task/{task}', 				handler: routes.task.delete });
+/*programs*/
+server.route({
+	method: 'POST', path:'/program',
+	config: { validate: { payload: {
+		name: joi.string().min(1).max(255).required(),
+		mission: joi.string().allow('').max(255).required()
+	}}},
+	handler: routes.program.create
+});
 
-server.route({method: 'POST', 	path:'/effort', 					handler: routes.effort.create });
-server.route({method: 'GET', 	path:'/effort/{effort}', 			handler: routes.effort.getOne });
-server.route({method: 'POST', 	path:'/effort/{effort}', 			handler: routes.effort.update });
-server.route({method: 'DELETE', path:'/effort/{effort}', 			handler: routes.effort.delete });
+server.route({
+	method: 'GET',	path:'/program/{program}',
+	config: { validate: { params: {
+		program: joi.number().integer().required(),
+	}}},
+	handler: routes.program.getOne
+});
 
-server.route({method: 'GET',	path:'/details/{effort}',  			handler: routes.effort.getOne });
-server.route({method: 'POST',	path:'/details/{effort}/type',  	handler: routes.effort.setType });
-server.route({method: 'POST',	path:'/details/{effort}/person',  	handler: routes.effort.addPerson });
-server.route({method: 'POST',	path:'/details/{effort}/removeperson',  handler: routes.effort.removePerson });
+server.route({
+	method: 'POST', path:'/program/{program}',
+	config: { validate: { params: {
+		program: joi.number().integer().required(),
+	}, payload: {
+		name: joi.string().min(1).max(255).required(),
+		mission: joi.string().allow('').max(255).required()
+	}}},
+	handler: routes.program.update
+});
+
+server.route({
+	method: 'DELETE', path:'/program/{program}',
+	config: { validate: { params: {
+		program: joi.number().integer().required(),
+	}}},
+	handler: routes.program.delete
+});
+
+
+/*task*/
+server.route({
+	method: 'POST', path:'/task',
+	config: { validate: { payload: {
+		name: joi.string().min(1).max(255).required(),
+		program: joi.number().integer().required(),
+	}}},
+	handler: routes.task.create
+});
+
+server.route({
+	method: 'GET',	path:'/task/{task}',
+	config: { validate: { params: {
+		task: joi.number().integer().required(),
+	}}},
+	handler: routes.task.getOne
+});
+
+server.route({
+	method: 'POST', path:'/task/{task}',
+	config: { validate: { params: {
+		task: joi.number().integer().required(),
+	}, payload: {
+		name: joi.string().min(1).max(255).required(),
+	}}},
+	handler: routes.task.update
+});
+
+server.route({
+	method: 'DELETE', path:'/task/{task}',
+	config: { validate: { params: {
+		task: joi.number().integer().required(),
+	}}},
+	handler: routes.task.delete
+});
+
+/*effort*/
+server.route({
+	method: 'POST', path:'/effort',
+	config: { validate: { payload: {
+		task: joi.number().integer().required(),
+		name: joi.string().min(1).max(255).required(),
+		type: joi.number().integer().min(-1).max(100).required(),
+	}}},
+	handler: routes.effort.create
+});
+
+server.route({
+	method: 'GET', path:'/effort/{effort}',
+	config: { validate: { params: {
+		effort: joi.number().integer().required(),
+	}}},
+	handler: routes.effort.getOne
+});
+
+server.route({
+	method: 'POST', path:'/effort/{effort}',
+	config: { validate: { params: {
+		effort: joi.number().required(),
+	}, payload: {
+		name: joi.string().min(1).max(255).required(),
+		type: joi.number().integer().min(-1).max(100).required(),
+	}}},
+	handler: routes.effort.update
+});
+
+server.route({
+	method: 'DELETE',path:'/effort/{effort}',
+	config: { validate: { params: {
+		effort: joi.number().integer().required(),
+	}}},
+	handler: routes.effort.delete
+});
+
+/*details*/
+//server.route({
+//	method: 'GET',	path:'/details/{effort}',
+//	handler: routes.effort.getOne
+//});
+//
+//server.route({
+//	method: 'POST',	path:'/details/{effort}/type',
+//	handler: routes.effort.setType
+//});
+//
+//server.route({
+//	method: 'POST',	path:'/details/{effort}/person',
+//	handler: routes.effort.addPerson
+//});
+//
+//server.route({
+//	method: 'POST',	path:'/details/{effort}/removeperson',
+//	handler: routes.effort.removePerson
+//});
 
 server.route({method: 'GET',	path:'/people',  	handler: routes.person.getAll });
 //server.route({method: 'POST',	path:'/person',  	handler: routes.person.create });
-
-//server.route({
-//	method: 'POST',
-//	path:'/task',
-//	handler: function (request, reply) {
-//		console.log(request.payload.title);
-//		reply(model.addTask(request.payload.title));
-//	}
-//});
-//
-//server.route({
-//	method: 'POST',
-//	path:'/effort',
-//	handler: function (request, reply) {
-//		reply(model.addEffort(request.payload.task, request.payload.title));
-//	}
-//});
-//
-//server.route({
-//	method: 'POST',
-//	path:'/effort/person',
-//	handler: function (request, reply) {
-//		reply(model.addEffortPerson(request.payload.task, request.payload.effort, request.payload.person));
-//	}
-//});
-//
-//start the database
-//model.run(function(){
-	// Start the server
 
 model.sequelize.sync().then(function(){
 	server.start(function(err){
