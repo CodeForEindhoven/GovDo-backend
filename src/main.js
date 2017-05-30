@@ -127,7 +127,8 @@ server.route({
 		name: joi.string().min(1).max(255).required(),
 		type: joi.number().integer().min(-1).max(100).required(),
 		people: joi.array().items(joi.object().keys({
-			id: joi.number().integer().required()
+			id: joi.number().integer().required(),
+			name: joi.string()
 		}))
 	}}},
 	handler: routes.effort.create
