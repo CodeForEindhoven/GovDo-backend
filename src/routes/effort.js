@@ -19,6 +19,19 @@ module.exports = {
 			name: request.payload.name,
 			type: request.payload.type
 		}).then(function(effort){
+			//add people
+			var idlist = request.payload.people.map(function(p){
+				return p.id;
+			});
+			return model.Person.findAll({
+				attributes: ['id'],
+				where: {id: {in: idlist}}
+			}).then(function(foundpeople){
+				effort.setPeople(foundpeople);
+				return effort;
+			});
+		}).then(function(effort){
+			//add task
 			model.Task.findAll({
 				attributes: ['id'],
 				where: {id: request.payload.task},
@@ -42,8 +55,6 @@ module.exports = {
 			var idlist = request.payload.people.map(function(p){
 				return p.id;
 			});
-			console.log(idlist);
-
 			model.Person.findAll({
 				attributes: ['id'],
 				where: {id: {in: idlist}}
