@@ -7,7 +7,7 @@ module.exports = {
 			include: [
 				{
 					model: model.Program,
-					attributes: ['id', 'name'],
+					attributes: ['id', 'name', 'mission'],
 					through: {attributes: []}
 				}
 			]
