@@ -1,5 +1,5 @@
 module.exports = {
-	programtype: require('./programtype'),
+	domain: require('./domain'),
 	program: require('./program'),
 	task: require('./task'),
 	effort: require('./effort'),

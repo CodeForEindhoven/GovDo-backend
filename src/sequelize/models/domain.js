@@ -5,6 +5,7 @@ module.exports = function(sequelize, DataTypes) {
   }, {
     classMethods: {
       associate: function(models) {
+		  Domain.belongsToMany(models.Program, {through: 'DomainProgram'});
       }
     }
   });

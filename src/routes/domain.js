@@ -1,8 +1,8 @@
-var model = require('../model');
+var model = require('../sequelize/models');
 
 module.exports = {
 	getAll: function (request, reply) {
-		reply(model.ProgramType.findAll({
+		reply(model.Domain.findAll({
 			attributes: ['id', 'name'],
 			include: [
 				{
@@ -15,13 +15,13 @@ module.exports = {
 	},
 
 	create: function (request, reply) {
-		reply(model.ProgramType.create({
+		reply(model.Domain.create({
 			name: request.payload.name,
 		}));
 	},
 
 	addProgram: function (request, reply) {
-		model.ProgramType.find({
+		model.Domain.find({
 			where: {id: request.params.domain},
 		}).then(function(domain){
 			model.Program.find({

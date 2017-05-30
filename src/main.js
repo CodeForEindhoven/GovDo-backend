@@ -11,19 +11,39 @@ server.connection({
 	routes: { cors: true }
 });
 
-// domains
-//server.route({method: 'GET',	path:'/domain', 					handler: routes.programtype.getAll });
-//server.route({method: 'POST',	path:'/domain', 					handler: routes.programtype.create });
-//server.route({method: 'POST', 	path:'/domain/{domain}/program', 	handler: routes.programtype.addProgram });
 server.route({
 	method: 'GET', path:'/',
 	handler: routes.home.version
 });
 
+// domains
 server.route({
-	method: 'GET', path:'/domain',
-	handler: routes.program.getAll
+	method: 'GET',	path:'/domain',
+	handler: routes.domain.getAll
 });
+
+server.route({
+	method: 'POST',	path:'/domain',
+	handler: routes.domain.create,
+	config: { validate: { payload: {
+		name: joi.string().min(1).max(255).required(),
+	}}},
+});
+
+server.route({
+	method: 'POST', 	path:'/domain/{domain}/program',
+	handler: routes.domain.addProgram,
+	config: { validate: { params: {
+		domain: joi.number().integer().required(),
+	}, payload: {
+		program: joi.number().integer().required(),
+	}}},
+});
+
+//server.route({
+//	method: 'GET', path:'/domain',
+//	handler: routes.program.getAll
+//});
 
 /*programs*/
 server.route({
