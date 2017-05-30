@@ -15,7 +15,10 @@ server.connection({
 //server.route({method: 'GET',	path:'/domain', 					handler: routes.programtype.getAll });
 //server.route({method: 'POST',	path:'/domain', 					handler: routes.programtype.create });
 //server.route({method: 'POST', 	path:'/domain/{domain}/program', 	handler: routes.programtype.addProgram });
-
+server.route({
+	method: 'GET', path:'/',
+	handler: routes.home.version
+});
 
 server.route({
 	method: 'GET', path:'/domain',

@@ -4,4 +4,5 @@ module.exports = {
 	task: require('./task'),
 	effort: require('./effort'),
 	person: require('./person'),
+	home: require('./home'),
 };
