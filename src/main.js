@@ -172,6 +172,11 @@ server.route({
 });
 
 server.route({
+	method: 'GET', path:'/teams',
+	handler: routes.person.getByTeam
+});
+
+server.route({
 	method: 'POST',	path:'/person',
 	config: { validate: { payload: {
 		name: joi.string().min(1).max(255).required(),
