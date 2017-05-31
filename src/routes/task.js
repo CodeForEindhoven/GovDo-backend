@@ -30,8 +30,9 @@ module.exports = {
 				attributes: ['id'],
 				where: {id: request.payload.program},
 			}).then(function(program){
-				task.addProgram(program[0]);
-				reply(task);
+				task.addProgram(program[0]).then(function(){
+					reply(task);
+				});
 			});
 		});
 	},

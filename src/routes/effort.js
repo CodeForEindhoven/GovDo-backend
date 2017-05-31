@@ -29,15 +29,16 @@ module.exports = {
 			}).then(function(foundpeople){
 				effort.setPeople(foundpeople);
 				return effort;
-			});
-		}).then(function(effort){
-			//add task
-			model.Task.findAll({
-				attributes: ['id'],
-				where: {id: request.payload.task},
-			}).then(function(task){
-				effort.addTask(task[0]);
-				reply(effort);
+			}).then(function(effort){
+				//add task
+				model.Task.findAll({
+					attributes: ['id'],
+					where: {id: request.payload.task},
+				}).then(function(task){
+					effort.addTask(task[0]).then(function(){
+						reply(effort);
+					});
+				});
 			});
 		});
 	},
