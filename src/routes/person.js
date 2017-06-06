@@ -47,6 +47,7 @@ module.exports = {
 
 				return {
 					name: program.name,
+					id: program.id,
 					People: People
 				};
 			});
