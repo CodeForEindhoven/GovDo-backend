@@ -88,6 +88,7 @@ server.route({
 	method: 'POST', path:'/task',
 	config: { validate: { payload: {
 		name: joi.string().min(1).max(255).required(),
+		means: joi.string().allow('').max(255).required(),
 		program: joi.number().integer().required(),
 	}}},
 	handler: routes.task.create
@@ -107,6 +108,7 @@ server.route({
 		task: joi.number().integer().required(),
 	}, payload: {
 		name: joi.string().min(1).max(255).required(),
+		means: joi.string().allow('').max(255).required(),
 	}}},
 	handler: routes.task.update
 });
@@ -184,7 +186,16 @@ server.route({
 	handler: routes.person.create
 });
 
+/*search*/
+server.route({
+	method: 'GET', path:'/changes',
+	handler: routes.search.getRecentChanges
+});
 
+server.route({
+	method: 'GET', path:'/search',
+	handler: routes.search.getAllEfforts
+});
 
 /*run the server*/
 model.sequelize.sync().then(function(){
