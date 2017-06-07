@@ -43,7 +43,7 @@ module.exports = {
 			include: [
 				{
 					model: model.Task,
-					attributes: ['id', 'name'],
+					attributes: ['id', 'name', 'means'],
 					through: {attributes: []}
 				}
 			]
