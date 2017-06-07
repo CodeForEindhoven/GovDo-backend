@@ -5,7 +5,21 @@ module.exports = {
 		reply(model.Effort.findAll({
 			attributes: ['id', 'name', 'updatedAt', 'createdAt'],
 			limit: 10,
-			order: '"updatedAt" DESC'
+			order: '"updatedAt" DESC',
+			include: [
+				{
+					model: model.Task,
+					attributes: ['id', 'name'],
+					through: {attributes: []},
+					include: [
+						{
+							model: model.Program,
+							attributes: ['id', 'name'],
+							through: {attributes: []},
+						}
+					]
+				}
+			]
 		}));
 	},
 };
