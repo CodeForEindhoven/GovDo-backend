@@ -22,4 +22,24 @@ module.exports = {
 			]
 		}));
 	},
+
+	getAllEfforts: function(request, reply) {
+		reply(model.Effort.findAll({
+			attributes: ['id', 'name'],
+			include: [
+				{
+					model: model.Task,
+					attributes: ['id', 'name'],
+					through: {attributes: []},
+					include: [
+						{
+							model: model.Program,
+							attributes: ['id', 'name'],
+							through: {attributes: []},
+						}
+					]
+				}
+			]
+		}));
+	}
 };

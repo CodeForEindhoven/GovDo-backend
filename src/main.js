@@ -190,6 +190,11 @@ server.route({
 	handler: routes.search.getRecentChanges
 });
 
+server.route({
+	method: 'GET', path:'/search',
+	handler: routes.search.getAllEfforts
+});
+
 /*run the server*/
 model.sequelize.sync().then(function(){
 	server.start(function(err){
