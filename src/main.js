@@ -184,7 +184,11 @@ server.route({
 	handler: routes.person.create
 });
 
-
+/*search*/
+server.route({
+	method: 'GET', path:'/changes',
+	handler: routes.search.getRecentChanges
+});
 
 /*run the server*/
 model.sequelize.sync().then(function(){
