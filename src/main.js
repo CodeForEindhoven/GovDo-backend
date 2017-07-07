@@ -127,6 +127,7 @@ server.route({
 	config: { validate: { payload: {
 		task: joi.number().integer().required(),
 		name: joi.string().min(1).max(255).required(),
+		description: joi.string().min(1).max(255).required(),
 		type: joi.number().integer().min(-1).max(100).required(),
 		people: joi.array().items(joi.object().keys({
 			id: joi.number().integer().required(),
@@ -150,6 +151,7 @@ server.route({
 		effort: joi.number().required(),
 	}, payload: {
 		name: joi.string().min(1).max(255).required(),
+		description: joi.string().min(1).max(255).required(),
 		type: joi.number().integer().min(-1).max(100).required(),
 		people: joi.array().items(joi.object().keys({
 			id: joi.number().integer().required(),

@@ -3,7 +3,7 @@ var model = require('../sequelize/models');
 module.exports = {
 	getOne: function (request, reply) {
 		reply(model.Effort.findAll({
-			attributes: ['id', 'name', 'type'],
+			attributes: ['id', 'name', 'description', 'type'],
 			where: {id: request.params.effort},
 			include: [
 				{
@@ -17,6 +17,7 @@ module.exports = {
 	create: function (request, reply) {
 		model.Effort.create({
 			name: request.payload.name,
+			description: request.payload.description,
 			type: request.payload.type
 		}).then(function(effort){
 			//add people
@@ -45,11 +46,12 @@ module.exports = {
 
 	update: function(request, reply) {
 		model.Effort.find({
-			attributes: ['id', 'name'],
+			attributes: ['id', 'name', 'description'],
 			where: {id: request.params.effort}
 		}).then(function(effort){
 			effort.updateAttributes({
 				name: request.payload.name,
+				description: request.payload.description,
 				type: request.payload.type
 			});
 
