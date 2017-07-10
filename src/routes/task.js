@@ -52,10 +52,31 @@ module.exports = {
 	},
 
 	delete: function(request, reply) {
-		model.Task.destroy({
-			where: {id: request.params.task}
-		}).then(function(data){
-			reply(data);
+		model.Task.find({
+			attributes: ['id', 'name'],
+			where: {id: request.params.task},
+			include: [
+				{
+					model: model.Program,
+					attributes: ['id', 'name'],
+					through: {attributes: []}
+				},
+				{
+					model: model.Effort,
+					attributes: ['id', 'name'],
+					through: {attributes: []}
+				}
+			]
+		}).then(function(task){
+			for(var i in task.Programs){
+				task.Programs[i].removeTask(task);
+			}
+			for(var j in task.Efforts){
+				task.Efforts[j].removeTask(task);
+			}
+
+			task.destroy();
+			reply(task);
 		});
 	},
 
