@@ -67,10 +67,23 @@ module.exports = {
 	},
 
 	delete: function(request, reply) {
-		model.Effort.destroy({
-			where: {id: request.params.effort}
-		}).then(function(data){
-			reply(data);
+		model.Effort.find({
+			attributes: ['id', 'name', 'description', 'type'],
+			where: {id: request.params.effort},
+			include: [
+				{
+					model: model.Task,
+					attributes: ['id', 'name'],
+					through: {attributes: []}
+				}
+			]
+		}).then(function(effort){
+			for(var i in effort.Tasks){
+				effort.Tasks[i].removeEffort(effort);
+			}
+
+			effort.destroy();
+			reply(effort);
 		});
 	},
 
@@ -83,30 +96,30 @@ module.exports = {
 			reply(updated);
 		});
 	},
-	addPerson: function (request, reply) {
+	//addPerson: function (request, reply) {
 
-		model.Effort.find({
-			where: {id: request.params.effort},
-		}).then(function(effort){
-			console.log(request.payload.person);
-			model.Person.findOrCreate({
-				where: {name: request.payload.person},
-			}).then(function(person){
-				effort.addPerson(person[0]);
-				reply(effort);
-			});
-		});
-	},
-	removePerson: function (request, reply) {
-		model.Effort.find({
-			where: {id: request.params.effort},
-		}).then(function(effort){
-			model.Person.findAll({
-				where: {name: request.payload.person},
-			}).then(function(person){
-				effort.removePerson(person[0]);
-				reply(person);
-			});
-		});
-	}
+	//	model.Effort.find({
+	//		where: {id: request.params.effort},
+	//	}).then(function(effort){
+	//		console.log(request.payload.person);
+	//		model.Person.findOrCreate({
+	//			where: {name: request.payload.person},
+	//		}).then(function(person){
+	//			effort.addPerson(person[0]);
+	//			reply(effort);
+	//		});
+	//	});
+	//},
+	//removePerson: function (request, reply) {
+	//	model.Effort.find({
+	//		where: {id: request.params.effort},
+	//	}).then(function(effort){
+	//		model.Person.findAll({
+	//			where: {name: request.payload.person},
+	//		}).then(function(person){
+	//			effort.removePerson(person[0]);
+	//			reply(person);
+	//		});
+	//	});
+	//}
 };
