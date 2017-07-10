@@ -68,7 +68,7 @@ module.exports = {
 
 	delete: function(request, reply) {
 		model.Effort.find({
-			attributes: ['id', 'name', 'description', 'type'],
+			attributes: ['id', 'name'],
 			where: {id: request.params.effort},
 			include: [
 				{
