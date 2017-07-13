@@ -2,7 +2,11 @@
 module.exports = function(sequelize, DataTypes) {
   var Task = sequelize.define('Task', {
     name: DataTypes.STRING,
-	means: DataTypes.STRING
+	means: DataTypes.STRING,
+	mode: {
+		type: DataTypes.INTEGER,
+		defaultValue: 0
+	}
   }, {
     classMethods: {
       associate: function(models) {

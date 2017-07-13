@@ -89,6 +89,7 @@ server.route({
 	config: { validate: { payload: {
 		name: joi.string().allow('').required(),
 		means: joi.string().allow('').required(),
+		mode: joi.number().integer().required(),
 		program: joi.number().integer().required(),
 	}}},
 	handler: routes.task.create
@@ -109,6 +110,7 @@ server.route({
 	}, payload: {
 		name: joi.string().allow('').required(),
 		means: joi.string().allow('').required(),
+		mode: joi.number().integer().required(),
 	}}},
 	handler: routes.task.update
 });
@@ -129,6 +131,7 @@ server.route({
 		name: joi.string().allow('').required(),
 		description: joi.string().allow('').required(),
 		type: joi.number().integer().min(-1).max(100).required(),
+		mode: joi.number().integer().required(),
 		people: joi.array().items(joi.object().keys({
 			id: joi.number().integer().required(),
 			name: joi.string()
@@ -153,6 +156,7 @@ server.route({
 		name: joi.string().allow('').required(),
 		description: joi.string().allow('').required(),
 		type: joi.number().integer().min(-1).max(100).required(),
+		mode: joi.number().integer().required(),
 		people: joi.array().items(joi.object().keys({
 			id: joi.number().integer().required(),
 			name: joi.string()

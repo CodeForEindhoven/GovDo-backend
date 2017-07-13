@@ -6,6 +6,10 @@ module.exports = function(sequelize, DataTypes) {
     type: {
         type: DataTypes.INTEGER,
         defaultValue: -1
+    },
+	mode: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0
     }
   }, {
     classMethods: {
