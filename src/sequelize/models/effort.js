@@ -2,7 +2,10 @@
 module.exports = function(sequelize, DataTypes) {
   var Effort = sequelize.define('Effort', {
     name: DataTypes.STRING,
-	description: DataTypes.STRING,
+	description: {
+		type: DataTypes.STRING,
+		defaultValue: ""
+	},
     type: {
         type: DataTypes.INTEGER,
         defaultValue: -1

@@ -2,7 +2,10 @@
 
 module.exports = {
 	up: function (queryInterface, Sequelize) {
-		return queryInterface.addColumn('Efforts','mode', Sequelize.INTEGER);
+		return queryInterface.addColumn('Efforts','mode', {
+			type: Sequelize.INTEGER,
+			defaultValue: 0
+		});
 	},
 
 	down: function (queryInterface, Sequelize) {
