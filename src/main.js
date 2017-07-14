@@ -89,6 +89,7 @@ server.route({
 	config: { validate: { payload: {
 		name: joi.string().allow('').required(),
 		means: joi.string().allow('').required(),
+		kpi: joi.string().allow('').required(),
 		mode: joi.number().integer().required(),
 		program: joi.number().integer().required(),
 	}}},
@@ -110,6 +111,7 @@ server.route({
 	}, payload: {
 		name: joi.string().allow('').required(),
 		means: joi.string().allow('').required(),
+		kpi: joi.string().allow('').required(),
 		mode: joi.number().integer().required(),
 	}}},
 	handler: routes.task.update

@@ -1,7 +1,10 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
   var Effort = sequelize.define('Effort', {
-    name: DataTypes.STRING,
+    name: {
+		type: DataTypes.STRING,
+		defaultValue: ""
+	},
 	description: {
 		type: DataTypes.STRING,
 		defaultValue: ""

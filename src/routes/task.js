@@ -3,7 +3,7 @@ var model = require('../sequelize/models');
 module.exports = {
 	getOne: function (request, reply) {
 		reply(model.Task.find({
-			attributes: ['id', 'name', 'means', 'mode'],
+			attributes: ['id', 'name', 'means', 'kpi', 'mode'],
 			where: {id: request.params.task},
 			include: [
 				{
@@ -26,6 +26,7 @@ module.exports = {
 		model.Task.create({
 			name: request.payload.name,
 			means: request.payload.means,
+			kpi: request.payload.kpi,
 			mode: request.payload.mode
 		}).then(function(task){
 			model.Program.findAll({
@@ -47,6 +48,7 @@ module.exports = {
 			task.updateAttributes({
 				name: request.payload.name,
 				means: request.payload.means,
+				kpi: request.payload.kpi,
 				mode: request.payload.mode
 			});
 			reply(task);
