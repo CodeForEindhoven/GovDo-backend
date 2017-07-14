@@ -25,7 +25,14 @@ module.exports = {
 
 	getAllEfforts: function(request, reply) {
 		reply(model.Effort.findAll({
-			attributes: ['id', 'name'],
+			where: {
+				$or: {
+					name: {like: "%"+request.payload.query+"%"},
+					description: {like: "%"+request.payload.query+"%"}
+				}
+			},
+			attributes: ['id', 'name', 'description'],
+			limit: 20,
 			include: [
 				{
 					model: model.Task,
