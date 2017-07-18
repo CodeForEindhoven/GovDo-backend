@@ -3,7 +3,7 @@ var model = require('../sequelize/models');
 module.exports = {
 	getOne: function (request, reply) {
 		reply(model.Effort.findAll({
-			attributes: ['id', 'name', 'type'],
+			attributes: ['id', 'name', 'description', 'type', 'mode'],
 			where: {id: request.params.effort},
 			include: [
 				{
@@ -17,7 +17,9 @@ module.exports = {
 	create: function (request, reply) {
 		model.Effort.create({
 			name: request.payload.name,
-			type: request.payload.type
+			description: request.payload.description,
+			type: request.payload.type,
+			mode: request.payload.mode
 		}).then(function(effort){
 			//add people
 			var idlist = request.payload.people.map(function(p){
@@ -45,12 +47,14 @@ module.exports = {
 
 	update: function(request, reply) {
 		model.Effort.find({
-			attributes: ['id', 'name'],
+			attributes: ['id'],
 			where: {id: request.params.effort}
 		}).then(function(effort){
 			effort.updateAttributes({
 				name: request.payload.name,
-				type: request.payload.type
+				description: request.payload.description,
+				type: request.payload.type,
+				mode: request.payload.mode
 			});
 
 			var idlist = request.payload.people.map(function(p){
@@ -68,12 +72,12 @@ module.exports = {
 
 	delete: function(request, reply) {
 		model.Effort.find({
-			attributes: ['id', 'name'],
+			attributes: ['id'],
 			where: {id: request.params.effort},
 			include: [
 				{
 					model: model.Task,
-					attributes: ['id', 'name'],
+					attributes: ['id'],
 					through: {attributes: []}
 				}
 			]
@@ -82,7 +86,7 @@ module.exports = {
 				effort.Tasks[i].removeEffort(effort);
 			}
 
-			effort.destroy();
+			//effort.destroy();
 			reply(effort);
 		});
 	},

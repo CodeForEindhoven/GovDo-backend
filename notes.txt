@@ -1,0 +1,2 @@
+//update query;
+UPDATE Tasks SET means = '' WHERE ifnull(means,'')='';

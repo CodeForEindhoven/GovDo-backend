@@ -3,12 +3,12 @@ var model = require('../sequelize/models');
 module.exports = {
 	getOne: function (request, reply) {
 		reply(model.Task.find({
-			attributes: ['id', 'name', 'means'],
+			attributes: ['id', 'name', 'means', 'kpi', 'mode'],
 			where: {id: request.params.task},
 			include: [
 				{
 					model: model.Effort,
-					attributes: ['id', 'name', 'type'],
+					attributes: ['id', 'name', 'description', 'type', 'mode'],
 					through: {attributes: []},
 					include: [
 						{
@@ -25,7 +25,9 @@ module.exports = {
 	create: function (request, reply) {
 		model.Task.create({
 			name: request.payload.name,
-			means: request.payload.means
+			means: request.payload.means,
+			kpi: request.payload.kpi,
+			mode: request.payload.mode
 		}).then(function(task){
 			model.Program.findAll({
 				attributes: ['id'],
@@ -40,12 +42,14 @@ module.exports = {
 
 	update: function(request, reply) {
 		model.Task.find({
-			attributes: ['id', 'name'],
+			attributes: ['id'],
 			where: {id: request.params.task}
 		}).then(function(task){
 			task.updateAttributes({
 				name: request.payload.name,
-				means: request.payload.means
+				means: request.payload.means,
+				kpi: request.payload.kpi,
+				mode: request.payload.mode
 			});
 			reply(task);
 		});
@@ -53,17 +57,17 @@ module.exports = {
 
 	delete: function(request, reply) {
 		model.Task.find({
-			attributes: ['id', 'name'],
+			attributes: ['id'],
 			where: {id: request.params.task},
 			include: [
 				{
 					model: model.Program,
-					attributes: ['id', 'name'],
+					attributes: ['id'],
 					through: {attributes: []}
 				},
 				{
 					model: model.Effort,
-					attributes: ['id', 'name'],
+					attributes: ['id'],
 					through: {attributes: []}
 				}
 			]
@@ -75,7 +79,7 @@ module.exports = {
 				task.Efforts[j].removeTask(task);
 			}
 
-			task.destroy();
+			//task.destroy();
 			reply(task);
 		});
 	},

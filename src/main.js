@@ -26,7 +26,7 @@ server.route({
 	method: 'POST',	path:'/domain',
 	handler: routes.domain.create,
 	config: { validate: { payload: {
-		name: joi.string().min(1).max(255).required(),
+		name: joi.string().allow('').required(),
 	}}},
 });
 
@@ -49,8 +49,8 @@ server.route({
 server.route({
 	method: 'POST', path:'/program',
 	config: { validate: { payload: {
-		name: joi.string().min(1).max(255).required(),
-		mission: joi.string().allow('').max(255).required()
+		name: joi.string().allow('').required(),
+		mission: joi.string().allow('').required()
 	}}},
 	handler: routes.program.create
 });
@@ -68,8 +68,8 @@ server.route({
 	config: { validate: { params: {
 		program: joi.number().integer().required(),
 	}, payload: {
-		name: joi.string().min(1).max(255).required(),
-		mission: joi.string().allow('').max(255).required()
+		name: joi.string().allow('').required(),
+		mission: joi.string().allow('').required()
 	}}},
 	handler: routes.program.update
 });
@@ -87,8 +87,10 @@ server.route({
 server.route({
 	method: 'POST', path:'/task',
 	config: { validate: { payload: {
-		name: joi.string().min(1).max(255).required(),
-		means: joi.string().allow('').max(255).required(),
+		name: joi.string().allow('').required(),
+		means: joi.string().allow('').required(),
+		kpi: joi.string().allow('').required(),
+		mode: joi.number().integer().required(),
 		program: joi.number().integer().required(),
 	}}},
 	handler: routes.task.create
@@ -107,8 +109,10 @@ server.route({
 	config: { validate: { params: {
 		task: joi.number().integer().required(),
 	}, payload: {
-		name: joi.string().min(1).max(255).required(),
-		means: joi.string().allow('').max(255).required(),
+		name: joi.string().allow('').required(),
+		means: joi.string().allow('').required(),
+		kpi: joi.string().allow('').required(),
+		mode: joi.number().integer().required(),
 	}}},
 	handler: routes.task.update
 });
@@ -126,8 +130,10 @@ server.route({
 	method: 'POST', path:'/effort',
 	config: { validate: { payload: {
 		task: joi.number().integer().required(),
-		name: joi.string().min(1).max(255).required(),
+		name: joi.string().allow('').required(),
+		description: joi.string().allow('').required(),
 		type: joi.number().integer().min(-1).max(100).required(),
+		mode: joi.number().integer().required(),
 		people: joi.array().items(joi.object().keys({
 			id: joi.number().integer().required(),
 			name: joi.string()
@@ -149,8 +155,10 @@ server.route({
 	config: { validate: { params: {
 		effort: joi.number().required(),
 	}, payload: {
-		name: joi.string().min(1).max(255).required(),
+		name: joi.string().allow('').required(),
+		description: joi.string().allow('').required(),
 		type: joi.number().integer().min(-1).max(100).required(),
+		mode: joi.number().integer().required(),
 		people: joi.array().items(joi.object().keys({
 			id: joi.number().integer().required(),
 			name: joi.string()
@@ -193,7 +201,10 @@ server.route({
 });
 
 server.route({
-	method: 'GET', path:'/search',
+	method: 'POST', path:'/search',
+	config: { validate: { payload: {
+		query: joi.string().allow('').required(),
+	}}},
 	handler: routes.search.getAllEfforts
 });
 
