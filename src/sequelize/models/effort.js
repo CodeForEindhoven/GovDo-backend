@@ -9,6 +9,10 @@ module.exports = function(sequelize, DataTypes) {
 		type: DataTypes.STRING,
 		defaultValue: ""
 	},
+	endproduct: {
+		type: DataTypes.STRING,
+		defaultValue: ""
+	},
     type: {
         type: DataTypes.INTEGER,
         defaultValue: -1

@@ -3,7 +3,7 @@ var model = require('../sequelize/models');
 module.exports = {
 	getOne: function (request, reply) {
 		reply(model.Effort.findAll({
-			attributes: ['id', 'name', 'description', 'type', 'mode'],
+			attributes: ['id', 'name', 'description', 'endproduct', 'type', 'mode'],
 			where: {id: request.params.effort},
 			include: [
 				{
@@ -18,6 +18,7 @@ module.exports = {
 		model.Effort.create({
 			name: request.payload.name,
 			description: request.payload.description,
+			endproduct: request.payload.endproduct,
 			type: request.payload.type,
 			mode: request.payload.mode
 		}).then(function(effort){
@@ -53,6 +54,7 @@ module.exports = {
 			effort.updateAttributes({
 				name: request.payload.name,
 				description: request.payload.description,
+				endproduct: request.payload.endproduct,
 				type: request.payload.type,
 				mode: request.payload.mode
 			});

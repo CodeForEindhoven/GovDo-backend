@@ -132,6 +132,7 @@ server.route({
 		task: joi.number().integer().required(),
 		name: joi.string().allow('').required(),
 		description: joi.string().allow('').required(),
+		endproduct: joi.string().allow('').required(),
 		type: joi.number().integer().min(-1).max(100).required(),
 		mode: joi.number().integer().required(),
 		people: joi.array().items(joi.object().keys({
@@ -157,6 +158,7 @@ server.route({
 	}, payload: {
 		name: joi.string().allow('').required(),
 		description: joi.string().allow('').required(),
+		endproduct: joi.string().allow('').required(),
 		type: joi.number().integer().min(-1).max(100).required(),
 		mode: joi.number().integer().required(),
 		people: joi.array().items(joi.object().keys({

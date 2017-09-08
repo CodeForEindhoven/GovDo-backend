@@ -31,7 +31,7 @@ module.exports = {
 					description: {like: "%"+request.payload.query+"%"}
 				}
 			},
-			attributes: ['id', 'name', 'description'],
+			attributes: ['id', 'name', 'description', 'endproduct',],
 			limit: 20,
 			include: [
 				{

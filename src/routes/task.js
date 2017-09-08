@@ -8,7 +8,7 @@ module.exports = {
 			include: [
 				{
 					model: model.Effort,
-					attributes: ['id', 'name', 'description', 'type', 'mode'],
+					attributes: ['id', 'name', 'description', 'endproduct', 'type', 'mode'],
 					through: {attributes: []},
 					include: [
 						{
