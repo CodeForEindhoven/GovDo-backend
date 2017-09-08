@@ -125,6 +125,16 @@ server.route({
 	handler: routes.task.delete
 });
 
+server.route({
+	method: 'POST', path:'/task/{task}/effort',
+	config: { validate: { params: {
+		task: joi.number().integer().required(),
+	}, payload: {
+		effort: joi.number().integer().required(),
+	}}},
+	handler: routes.task.addEffort
+});
+
 /*effort*/
 server.route({
 	method: 'POST', path:'/effort',
