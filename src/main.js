@@ -213,6 +213,11 @@ server.route({
 });
 
 server.route({
+	method: 'GET', path:'/overview',
+	handler: routes.search.getOverview
+});
+
+server.route({
 	method: 'POST', path:'/search',
 	config: { validate: { payload: {
 		query: joi.string().allow('').required(),

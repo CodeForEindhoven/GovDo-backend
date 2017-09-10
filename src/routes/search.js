@@ -23,6 +23,33 @@ module.exports = {
 		}));
 	},
 
+	getOverview: function(request, reply){
+		reply(model.Domain.findAll({
+			attributes: ['id', 'name'],
+			include: [
+				{
+					model: model.Program,
+					attributes: ['id', 'name'],
+					through: {attributes: []},
+					include: [
+						{
+							model: model.Task,
+							attributes: ['id', 'name'],
+							through: {attributes: []},
+							include: [
+								{
+									model: model.Effort,
+									attributes: ['id', 'name'],
+									through: {attributes: []},
+								}
+							]
+						}
+					]
+				}
+			]
+		}));
+	},
+
 	getAllEfforts: function(request, reply) {
 		model.Effort.findAll({
 			where: {
@@ -93,6 +120,5 @@ module.exports = {
 				reply(efforts.concat(tasks));
 			});
 		});
-
 	}
 };
