@@ -97,4 +97,17 @@ module.exports = {
 		});
 	},
 
+	removeEffort: function (request, reply) {
+		model.Task.find({
+			where: {id: request.params.task},
+		}).then(function(task){
+			model.Effort.find({
+				where: {id: request.payload.effort},
+			}).then(function(effort){
+				task.removeEffort(effort);
+				reply(task);
+			});
+		});
+	},
+
 };
