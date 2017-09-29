@@ -25,22 +25,29 @@ module.exports = {
 
 	getOverview: function(request, reply){
 		reply(model.Domain.findAll({
-			attributes: ['id', 'name'],
+			//attributes: ['id', 'name'],
 			include: [
 				{
 					model: model.Program,
-					attributes: ['id', 'name'],
+					//attributes: ['id', 'name'],
 					through: {attributes: []},
 					include: [
 						{
 							model: model.Task,
-							attributes: ['id', 'name'],
+							//attributes: ['id', 'name'],
 							through: {attributes: []},
 							include: [
 								{
 									model: model.Effort,
-									attributes: ['id', 'name'],
+									//attributes: ['id', 'name'],
 									through: {attributes: []},
+									include: [
+										{
+											model: model.Person,
+											//attributes: ['id', 'name'],
+											through: {attributes: []},
+										}
+									]
 								}
 							]
 						}
